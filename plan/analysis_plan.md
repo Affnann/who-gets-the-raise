@@ -93,4 +93,9 @@ where *G*<sub>*o*</sub> = 1 for guards. H4 is supported if θ > 0. A θ near zer
 
 ## Change log
 
-(Empty at the first commit.)
+**1 November 2026, after the plan was pushed to GitHub (05:02 UTC) and before any test was run.** Details the plan left open or got wrong, settled before the first result:
+
+1. C9 said five prefectures carry FY2021 COVID-19 rates. MLIT's FY2021 table has eight, each in one grade (angle brackets in the source: Niigata A, Gifu B, Shizuoka B, Mie B, Tokushima A, Kagawa A, Ehime A, Kochi A). C9 drops those eight prefecture-years, as well as Iwate, Miyagi and Fukushima in every year. The README of japan-guard-price-panel v1.1.0 repeats the error; the data themselves are right.
+2. What each check re-estimates. C1-C4, C6, C8, C9 and C11 re-estimate H1 to H4. C5 (2020-2025) and C7 (each sub-period) re-estimate H1 to H4 within the period, with no 2020 dummy in H1. C10 is one regression: Δln *W* on Δln *R* and Δln *M* with year effects, for 2013-2025. C12 adds ln *R*<sub>*p,t*+1</sub> to H2 and H3 and reports its coefficient, the coefficient on ln *R*<sub>*pt*</sub> and their difference with a 95 percent interval.
+3. In H4, building cleaners follow each check's definition of pay where it applies to them (C3, C4, C5). The weights are those of section 3 in every check except C8. In C6, the combined pay of guards and gatekeepers is built from their worker-weighted means of *S*, *B* and *H*; in the five prefecture-years where MHLW publishes no figures for gatekeepers (Okinawa 2014 and 2018, Yamagata 2016, Niigata and Miyazaki 2019), from guards alone.
+4. Standard errors: clustered by prefecture, with the finite-sample correction *G*/(*G*−1) · (*N*−1)/(*N*−*K*), where *K* counts every coefficient including the fixed effects, and *t*(*G*−1) critical values (*t*(46); *t*(43) in C9). The test of β = 0 in H2 is two-sided.
