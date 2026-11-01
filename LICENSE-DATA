@@ -1,0 +1,34 @@
+Data license
+
+Copyright (c) 2026 Kazi Affnann Azom
+
+The author's own material in this repository (the text and documentation, the
+analysis plan in plan/, the panel and estimates in results/, the tables in
+tables/ and the figures in figures/) is licensed under the Creative Commons
+Attribution 4.0 International License (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+
+The files in data/ are copied unchanged from japan-guard-price-panel v1.2.0
+(https://doi.org/10.5281/zenodo.23852751), published under CC BY 4.0. They are
+compiled from official Japanese government statistics, which have their own
+terms:
+
+- 「公共工事設計労務単価」（国土交通省）
+  https://www.mlit.go.jp/totikensangyo/const/1_6_bt_000217.html
+  Public Data License 1.0 (see https://www.mlit.go.jp/link.html).
+  「公共工事設計労務単価」（国土交通省）を加工して作成
+- 「賃金構造基本統計調査」（厚生労働省）, via e-Stat
+  https://www.e-stat.go.jp/stat-search/files?toukei=00450091&tstat=000001011429
+  e-Stat terms of use (https://www.e-stat.go.jp/terms-of-use), compatible
+  with CC BY 4.0. 「賃金構造基本統計調査」（厚生労働省）を加工して作成
+- 「平成14年度から令和８年度までの地域別最低賃金改定状況」（厚生労働省）
+  https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/koyou_roudou/roudoukijun/minimumichiran/
+  Public Data License 1.0 (see https://www.mhlw.go.jp/chosakuken/index.html).
+  「平成14年度から令和８年度までの地域別最低賃金改定状況」（厚生労働省）を
+  加工して作成
+
+The panel, estimates, tables and figures are calculated from these sources.
+They are not official products of MLIT or MHLW, and neither ministry endorses
+them. Please credit the sources above as well when you use them.
+
+The code is licensed separately under the MIT License (see LICENSE).

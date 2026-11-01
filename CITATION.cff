@@ -1,0 +1,52 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite it as below."
+type: software
+title: "who-gets-the-raise: replication package for 'Who Gets the Raise? Japan's Public Works Pay Rates and the Wages of Security Guards'"
+authors:
+  - family-names: "Azom"
+    given-names: "Kazi Affnann"
+    orcid: "https://orcid.org/0009-0001-5998-7642"
+repository-code: "https://github.com/Affnann/who-gets-the-raise"
+version: "1.0.0"
+date-released: "2026-11-01"
+doi: "10.5281/zenodo.23852892"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.23852892"
+    description: "This version (v1.0.0)"
+license:
+  - MIT
+  - CC-BY-4.0
+keywords:
+  - traffic guards
+  - security industry
+  - public procurement
+  - design labor rates
+  - wage pass-through
+  - minimum wage
+  - Japan
+  - replication package
+references:
+  - type: article
+    title: "Who Gets the Raise? Japan's Public Works Pay Rates and the Wages of Security Guards"
+    authors:
+      - family-names: "Azom"
+        given-names: "Kazi Affnann"
+        orcid: "https://orcid.org/0009-0001-5998-7642"
+    year: 2026
+    status: preprint
+    publisher:
+      name: "Zenodo"
+    doi: "10.5281/zenodo.23852894"
+  - type: data
+    title: "japan-guard-price-panel: Japan's public works pay rates for traffic guards, security guards' pay and minimum wages by prefecture, 2012-2026"
+    authors:
+      - family-names: "Azom"
+        given-names: "Kazi Affnann"
+        orcid: "https://orcid.org/0009-0001-5998-7642"
+    version: "v1.2.0"
+    year: 2026
+    publisher:
+      name: "Mercenomics"
+    doi: "10.5281/zenodo.23852751"
+    repository-code: "https://github.com/Affnann/japan-guard-price-panel"
