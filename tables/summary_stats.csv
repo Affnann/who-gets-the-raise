@@ -1,0 +1,40 @@
+variable,description,period,n,mean,sd,min,max
+rate_A,"Official rate, guard A (yen per day)",2012-2025,658,13150.9119,2771.4692,7200.0000,20900.0000
+rate_A,"Official rate, guard A (yen per day)",2012,47,8429.7872,613.2291,7200.0000,9700.0000
+rate_A,"Official rate, guard A (yen per day)",2025,47,17838.2979,1314.5595,15100.0000,20900.0000
+rate_B,"Official rate, guard B (yen per day)",2012-2025,658,11362.6140,2319.2334,6400.0000,17600.0000
+rate_B,"Official rate, guard B (yen per day)",2012,47,7585.1064,577.8441,6400.0000,8900.0000
+rate_B,"Official rate, guard B (yen per day)",2025,47,15329.7872,1246.3712,12800.0000,17600.0000
+R,"Official rate R, mean of A and B (yen per day)",2012-2025,658,12256.7629,2535.1734,6850.0000,19050.0000
+R,"Official rate R, mean of A and B (yen per day)",2012,47,8007.4468,583.9315,6850.0000,9150.0000
+R,"Official rate R, mean of A and B (yen per day)",2025,47,16584.0426,1245.5183,13950.0000,19050.0000
+g_S,Guards' scheduled monthly earnings S (yen),2012-2025,658,196748.0243,26621.8442,134000.0000,284600.0000
+g_S,Guards' scheduled monthly earnings S (yen),2012,47,176938.2979,23823.1213,134000.0000,230900.0000
+g_S,Guards' scheduled monthly earnings S (yen),2025,47,223923.4043,19519.2125,188900.0000,271800.0000
+g_B,Guards' annual bonuses B (yen),2012-2025,658,250247.5684,165906.5196,0.0000,1303400.0000
+g_B,Guards' annual bonuses B (yen),2012,47,203010.6383,155554.1276,12200.0000,847800.0000
+g_B,Guards' annual bonuses B (yen),2025,47,288729.7872,173471.6766,41600.0000,1005200.0000
+g_H,Guards' scheduled monthly hours H,2012-2025,658,169.2447,5.5465,149.0000,204.0000
+g_H,Guards' scheduled monthly hours H,2012,47,171.2979,5.4490,161.0000,182.0000
+g_H,Guards' scheduled monthly hours H,2025,47,166.5745,5.2076,153.0000,182.0000
+g_W,Guards' pay per 8 hours W (yen),2012-2025,658,10296.4449,1773.8933,6484.5238,17778.3333
+g_W,Guards' pay per 8 hours W (yen),2012,47,9045.8410,1497.7534,6827.3292,14620.6061
+g_W,Guards' pay per 8 hours W (yen),2025,47,11920.1164,1466.5473,9554.5279,17778.3333
+W_over_R,W / R,2012-2025,658,0.8603,0.1619,0.5389,1.8625
+W_over_R,W / R,2012,47,1.1314,0.1809,0.8895,1.8625
+W_over_R,W / R,2025,47,0.7200,0.0805,0.5523,0.9877
+M,Minimum wage M (yen per hour),2012-2025,658,810.4818,106.8473,645.0000,1163.0000
+M,Minimum wage M (yen per hour),2012,47,691.0000,48.0154,645.0000,837.0000
+M,Minimum wage M (yen per hour),2025,47,998.3617,53.2637,951.0000,1163.0000
+W_over_8M,W / (8M),2012-2025,658,1.5925,0.2182,1.0884,2.6334
+W_over_8M,W / (8M),2012,47,1.6357,0.2447,1.3211,2.6334
+W_over_8M,W / (8M),2025,47,1.4923,0.1656,1.2506,2.1723
+c_W,Building cleaners' pay per 8 hours (yen),2012-2025,658,9110.4627,1467.4547,6302.2495,16606.3260
+c_W,Building cleaners' pay per 8 hours (yen),2012,47,8104.3929,1321.7723,6302.2495,12978.8820
+c_W,Building cleaners' pay per 8 hours (yen),2025,47,10795.8893,1413.8770,8712.6016,15185.3659
+g_n,"Guards, estimated number",2012-2025,658,4041.0030,6171.4514,110.0000,52500.0000
+g_n,"Guards, estimated number",2012,47,4129.3617,7863.9592,510.0000,52500.0000
+g_n,"Guards, estimated number",2025,47,4817.2340,8112.9753,430.0000,47640.0000
+c_n,"Building cleaners, estimated number",2012-2025,658,2175.7143,4456.7296,30.0000,56250.0000
+c_n,"Building cleaners, estimated number",2012,47,1897.6596,3366.6518,40.0000,21940.0000
+c_n,"Building cleaners, estimated number",2025,47,2898.7234,5283.5457,200.0000,31890.0000
