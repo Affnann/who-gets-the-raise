@@ -9,6 +9,12 @@ X3  Long differences, 2012 to 2025: the change in ln W on the change in ln R acr
     and for building cleaners (weighted, heteroskedasticity-robust HC1 standard errors).
 X4  Levels: the weighted correlation across prefectures between ln R and guards' ln W, and between ln R and
     building cleaners' ln W, in each year.
+X5  Other protective service workers (MHLW occupation 1459, the occupation in which MHLW's definitions place
+    traffic guards from 2020), 2020-2025, excluding position holders, weighted by their own average number:
+    national growth of W against R; H1 (no 2020 dummy), H2 and H3; H4 against building cleaners and against
+    security guards. Prefecture-years without figures are left out.
+X6  Security guards and other protective service workers combined, 2020-2025 (worker-weighted S, B and H):
+    national growth of W against R; H1 (no 2020 dummy), H2 and H3.
 
 Inputs  results/panel.csv, data/pay_by_prefecture.csv
 Outputs tables/extra_checks.csv, results/extra_checks.md
@@ -158,6 +164,65 @@ def main():
                          coef=wcorr(np.log(sub["R"]), np.log(sub["g_W"]), sub["w_guard"]),
                          coef_cleaners=wcorr(np.log(sub["R"]), np.log(sub["c_W"]), sub["w_cleaner"]), n_obs=len(sub)))
 
+    # X5 and X6: other protective service workers, 2020-2025
+    def occ_vars(occ, prefix):
+        o = pay[(pay["occupation"] == occ) & (pay["position_holders"] == "excluded") & (pay["sex"] == "total")
+                & (pay["survey_year"] >= 2020)].set_index(["pref_code", "survey_year"])
+        return pd.DataFrame({f"{prefix}_S": o["scheduled_earnings_kyen"] * 1000, f"{prefix}_B": o["annual_bonus_kyen"] * 1000,
+                             f"{prefix}_H": o["scheduled_hours"], f"{prefix}_n": o["workers_tens"] * 10})
+    q = occ_vars("other_protective", "o").join(occ_vars("security_guards", "s"))
+    q["o_W"] = 8 * (q["o_S"] + q["o_B"] / 12) / q["o_H"]
+    has_o = q[["o_S", "o_B", "o_H", "o_n"]].notna().all(axis=1)
+    no = q["o_n"].where(has_o, 0.0)
+    for v in ("S", "B", "H"):
+        q[f"b_{v}"] = (q[f"s_{v}"] * q["s_n"] + q[f"o_{v}"].where(has_o, 0.0) * no) / (q["s_n"] + no)
+    q["b_n"] = q["s_n"] + no
+    q["b_W"] = 8 * (q["b_S"] + q["b_B"] / 12) / q["b_H"]
+    q.index = q.index.set_names(["pref_code", "year"])
+    p5 = panel[panel["year"] >= 2020].set_index(["pref_code", "year"]).join(q[["o_W", "o_n", "b_W", "b_n"]]).reset_index()
+    pr5 = p5[p5["pref_code"] != "00"]
+    p5 = p5.merge(pr5.groupby("pref_code")["o_n"].mean().rename("w_o"), on="pref_code", how="left")
+    p5 = p5.merge(pr5.groupby("pref_code")["b_n"].mean().rename("w_b"), on="pref_code", how="left")
+    natq = p5[p5["pref_code"] == "00"].set_index("year")
+    x56_growth = {k: 100 * (natq.loc[2025, c] / natq.loc[2020, c] - 1)
+                  for k, c in (("R", "R"), ("security guards", "g_W"), ("other protective", "o_W"),
+                               ("combined", "b_W"), ("building cleaners", "c_W"))}
+    x56_levels = {k: (natq.loc[2020, c], natq.loc[2025, c]) for k, c in
+                  (("R", "R"), ("other protective", "o_W"), ("combined", "b_W"), ("security guards", "g_W"))}
+    dropped = pr5.loc[pr5["o_W"].isna(), ["prefecture", "year"]].values.tolist()
+    assert sorted(map(tuple, dropped)) == [("Ishikawa", 2020), ("Shimane", 2020), ("Shimane", 2023), ("Shimane", 2024)], dropped
+    keep_cols = ("term", "coef", "se", "ci_low", "ci_high", "p_one", "p_two", "null")
+
+    def add(check, model, c, n):
+        rows.append(dict(check=check, model=model, **{k: v for k, v in c.items() if k in keep_cols}, n_obs=n))
+
+    for check, wcol, wname in (("X5", "o_W", "w_o"), ("X6", "b_W", "w_b")):
+        dd = p5[(p5["pref_code"] != "00") & p5[wcol].notna()].copy()
+        dd["lnR"], dd["lnM"], dd["lnW"] = np.log(dd["R"]), np.log(dd["M"]), np.log(dd[wcol])
+        dd["trend"] = dd["year"] - 2012
+        dd["gap"] = dd["lnW"] - dd["lnR"]
+        res, G = A.fit(dd, "gap", ["trend"], "pref_code", weight=wname)
+        add(check, "H1", A.coef(res, G, "trend", side="lt"), len(dd))
+        res, G = A.fit(dd, "lnW", ["lnR"], "pref_code", "year", drop_levels=["2020"], weight=wname)
+        add(check, "H2", A.coef(res, G, "lnR", null=1.0, side="lt"), len(dd))
+        add(check, "H2", A.coef(res, G, "lnR", null=0.0), len(dd))
+        res, G = A.fit(dd, "lnW", ["lnR", "lnM"], "pref_code", "year", drop_levels=["2020"], weight=wname)
+        add(check, "H3", A.coef(res, G, "lnR"), len(dd))
+        add(check, "H3", A.coef(res, G, "lnM", side="gt"), len(dd))
+        if check == "X5":
+            for other, ocol, owt in (("building cleaners", "c_W", "w_cleaner"), ("security guards", "g_W", "w_guard")):
+                base = p5[p5["pref_code"] != "00"].copy()
+                a1 = base[base["o_W"].notna()].assign(occ="op", G=1.0, y=lambda z: np.log(z["o_W"]), w=lambda z: z["w_o"])
+                a0 = base.assign(occ="other", G=0.0, y=lambda z: np.log(z[ocol]), w=lambda z: z[owt])
+                st = pd.concat([a1, a0], ignore_index=True)
+                st["lnR"], st["lnM"] = np.log(st["R"]), np.log(st["M"])
+                st["lnR_G"], st["lnM_G"], st["lnM_C"] = st["lnR"] * st["G"], st["lnM"] * st["G"], st["lnM"] * (1 - st["G"])
+                st["occ_pref"] = st["occ"] + "_" + st["pref_code"]
+                st["occ_year"] = st["occ"] + "_" + st["year"].astype(str)
+                res, G = A.fit(st, "y", ["lnR", "lnR_G", "lnM_G", "lnM_C"], "occ_pref", "occ_year",
+                               drop_levels=["op_2020", "other_2020"], weight="w")
+                add(check, f"H4 against {other}", A.coef(res, G, "lnR_G", side="gt"), len(st))
+
     out = pd.DataFrame(rows)
     out.to_csv(ROOT / "tables" / "extra_checks.csv", index=False, float_format="%.6g")
     L = ["# Analyses added after the main results were seen", "", "Output of `code/04_extra_checks.py`. Not tests of the plan's hypotheses.", ""]
@@ -176,6 +241,14 @@ def main():
     L += ["", "## X4. Weighted correlation across prefectures in levels", "", "| Year | ln R with guards' ln W | ln R with cleaners' ln W |", "|---|---|---|"]
     for r in out[out["check"] == "X4"].itertuples():
         L.append(f"| {r.model} | {r.coef:.3f} | {r.coef_cleaners:.3f} |")
+    L += ["", "## X5 and X6. Other protective service workers (includes traffic guards), and combined with security guards, 2020-2025", ""]
+    L += [f"- National growth 2020-2025: " + "; ".join(f"{k} {v:.1f}%" for k, v in x56_growth.items())]
+    L += [f"- National levels, 2020 and 2025 (yen per 8 hours): " + "; ".join(f"{k} {a:,.0f} and {b:,.0f}" for k, (a, b) in x56_levels.items())]
+    L += [f"- Prefecture-years left out of X5 (no figures): {', '.join(f'{p} {y}' for p, y in dropped)}", "",
+          "| Analysis | Model | Term | H0 | Estimate | SE | 95% interval | p two-sided | p one-sided | N |", "|---|---|---|---|---|---|---|---|---|---|"]
+    for r in out[out["check"].isin(["X5", "X6"])].itertuples():
+        L.append(f"| {r.check} | {r.model} | {r.term} | {r.null:g} | {r.coef:.4f} | {r.se:.4f} | {r.ci_low:.3f} to {r.ci_high:.3f} | "
+                 f"{r.p_two:.4f} | {'' if pd.isna(r.p_one) else f'{r.p_one:.4f}'} | {r.n_obs} |")
     (ROOT / "results" / "extra_checks.md").write_text("\n".join(L) + "\n", encoding="utf-8")
     print("\n".join(L))
 
