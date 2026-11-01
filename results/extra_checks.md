@@ -26,12 +26,12 @@ Output of `code/04_extra_checks.py`. Not tests of the plan's hypotheses.
 - National growth of this pay measure, 2020-2025: 6.0%
 - National growth of this pay measure, 2012-2025: 31.5%
 
-## X3. Long differences, 2012-2025 (one observation per prefecture, HC1)
+## X3. Long differences, 2012-2025 (one observation per prefecture, HC1, t(45))
 
 | Occupation | Slope on Δln R | SE | 95% interval | p | SD of Δln R | SD of Δln W |
 |---|---|---|---|---|---|---|
-| long difference, guards | -0.713 | 0.914 | -2.504 to 1.079 | 0.4355 | 0.0310 | 0.1461 |
-| long difference, cleaners | -0.295 | 0.544 | -1.363 to 0.772 | 0.5875 | 0.0310 | 0.1435 |
+| long difference, guards | -0.713 | 0.914 | -2.554 to 1.128 | 0.4396 | 0.0310 | 0.1461 |
+| long difference, cleaners | -0.295 | 0.544 | -1.392 to 0.801 | 0.5902 | 0.0310 | 0.1435 |
 
 ## X4. Weighted correlation across prefectures in levels
 

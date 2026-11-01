@@ -63,11 +63,18 @@ ax.text(60, 66, "Pay rose by as much as the rate", fontsize=7.5, color="#555555"
 ax.axhline(0, color="#CCCCCC", lw=0.8)
 ax.scatter(dR, dW, s=w / w.max() * 180 + 8, color=ACCENT, alpha=0.55, edgecolor="white", lw=0.5)
 names = a["prefecture"]
-OFFSET = {"13": (12, -10, "left"), "27": (-10, 6, "right")}  # Tokyo and Osaka sit on top of each other
-for code in ("13", "27", "23", "01", "40", "47", "04"):
+# The seven prefectures with the most guards are labelled, each label set off with a leader line where the
+# circles are crowded (Tokyo and Osaka sit on top of each other; Kanagawa, Chiba, Fukuoka and Hokkaido sit in the
+# middle of the cloud).
+OFFSET = {"13": (12, -10, "left"), "27": (-10, 6, "right"), "14": (-48, -2, "right"), "12": (-48, 8, "right"),
+          "40": (30, 14, "left"), "01": (30, -4, "left")}
+for code in ("13", "27", "23", "14", "40", "12", "01"):
     dx, dy, ha = OFFSET.get(code, (5, 3, "left"))
     ax.annotate(names[code], (dR[code], dW[code]), fontsize=7, xytext=(dx, dy), textcoords="offset points", ha=ha,
+                va="center" if code in OFFSET else "baseline",
                 arrowprops=dict(arrowstyle="-", lw=0.5, color="#555555", shrinkA=0, shrinkB=3) if code in OFFSET else None)
+top7 = w.sort_values(ascending=False).index[:7]
+assert set(top7) == {"13", "27", "23", "14", "40", "12", "01"}, list(top7)
 ax.set_xlim(0, 140)
 ax.set_ylim(-20, 100)
 ax.set_aspect("equal")  # the same scale on both axes, so the distance below the dashed line is not distorted

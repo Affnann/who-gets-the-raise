@@ -22,7 +22,7 @@ The analysis plan was written before any test was run and is the first commit of
 | Path | Contents |
 |---|---|
 | [`plan/analysis_plan.md`](plan/analysis_plan.md) | The dated analysis plan: question, data, definitions, hypotheses H1-H4, checks C1-C12, change log |
-| [`data/`](data/) | The three data files from japan-guard-price-panel v1.2.0 (see [`data/README.md`](data/README.md)) |
+| [`data/`](data/) | The three data files from japan-guard-price-panel v1.2.1 (see [`data/README.md`](data/README.md)) |
 | [`code/01_build_panel.py`](code/01_build_panel.py) | Builds the prefecture-year panel (`results/panel.csv`) with the plan's definitions |
 | [`code/02_analysis.py`](code/02_analysis.py) | H1-H4 and checks C1-C12, as set out in the plan |
 | [`code/03_figures.py`](code/03_figures.py) | The three figures |
@@ -64,7 +64,7 @@ For prefecture *p* and survey year *t*:
 
 ## Data sources
 
-All three files come from japan-guard-price-panel v1.2.0 ([10.5281/zenodo.23852751](https://doi.org/10.5281/zenodo.23852751)); the rows used by the planned analysis are identical to v1.1.0 ([10.5281/zenodo.23852300](https://doi.org/10.5281/zenodo.23852300)), the version named in the plan. The data set compiles them from:
+All three files come from japan-guard-price-panel v1.2.1 ([10.5281/zenodo.23856290](https://doi.org/10.5281/zenodo.23856290)). The plan names v1.1.0 ([10.5281/zenodo.23852300](https://doi.org/10.5281/zenodo.23852300)); the prefecture rows used by the planned analysis are identical in the two, and v1.2.1 corrects two national averages of the minimum wage (see [`data/README.md`](data/README.md)). The data set compiles them from:
 
 - 「公共工事設計労務単価」（国土交通省）, https://www.mlit.go.jp/totikensangyo/const/1_6_bt_000217.html, used under the Public Data License 1.0. The tables are edited from MLIT's files (「公共工事設計労務単価」（国土交通省）を加工して作成) and are not an official MLIT product.
 - 「賃金構造基本統計調査」（厚生労働省）, via e-Stat, https://www.e-stat.go.jp/stat-search/files?toukei=00450091&tstat=000001011429, used under e-Stat's terms of use (compatible with CC BY 4.0). The tables are edited from these files and are not an official MHLW product.

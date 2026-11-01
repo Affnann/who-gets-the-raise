@@ -14,6 +14,9 @@ identifiers:
   - type: doi
     value: "10.5281/zenodo.23852892"
     description: "This version (v1.0.0)"
+  - type: doi
+    value: "10.5281/zenodo.23852891"
+    description: "Concept DOI for all versions"
 license:
   - MIT
   - CC-BY-4.0
@@ -44,9 +47,9 @@ references:
       - family-names: "Azom"
         given-names: "Kazi Affnann"
         orcid: "https://orcid.org/0009-0001-5998-7642"
-    version: "v1.2.0"
+    version: "v1.2.1"
     year: 2026
     publisher:
       name: "Mercenomics"
-    doi: "10.5281/zenodo.23852751"
+    doi: "10.5281/zenodo.23856290"
     repository-code: "https://github.com/Affnann/japan-guard-price-panel"

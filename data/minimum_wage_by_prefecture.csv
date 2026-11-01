@@ -719,7 +719,7 @@ fiscal_year,pref_code,prefecture_ja,prefecture_en,hourly_yen,effective_date
 2016,45,宮崎県,Miyazaki,714,2016-10-01
 2016,46,鹿児島県,Kagoshima,715,2016-10-01
 2016,47,沖縄県,Okinawa,714,2016-10-01
-2017,00,全国（加重平均）,Japan (weighted average),847,
+2017,00,全国（加重平均）,Japan (weighted average),848,
 2017,01,北海道,Hokkaido,810,2017-10-01
 2017,02,青森県,Aomori,738,2017-10-06
 2017,03,岩手県,Iwate,738,2017-10-01
@@ -1151,7 +1151,7 @@ fiscal_year,pref_code,prefecture_ja,prefecture_en,hourly_yen,effective_date
 2025,45,宮崎県,Miyazaki,1023,2025-11-16
 2025,46,鹿児島県,Kagoshima,1026,2025-11-01
 2025,47,沖縄県,Okinawa,1023,2025-12-01
-2026,00,全国（加重平均）,Japan (weighted average),1176,
+2026,00,全国（加重平均）,Japan (weighted average),1177,
 2026,01,北海道,Hokkaido,1131,2026-10-01
 2026,02,青森県,Aomori,1090,2026-10-29
 2026,03,岩手県,Iwate,1090,2026-12-01

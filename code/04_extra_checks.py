@@ -6,7 +6,7 @@ X1  Wild cluster bootstrap p-values for the main tests of H1-H4 (restricted, Rad
 X2  Guards' pay per hour actually worked, including overtime pay: 8 * (C + B/12) / (H + O), where C is monthly
     contractual cash earnings (scheduled earnings plus overtime pay) and O overtime hours. H1-H3 re-estimated.
 X3  Long differences, 2012 to 2025: the change in ln W on the change in ln R across the 47 prefectures, for guards
-    and for building cleaners (weighted, heteroskedasticity-robust HC1 standard errors).
+    and for building cleaners (weighted, heteroskedasticity-robust HC1 standard errors, t(45) critical values).
 X4  Levels: the weighted correlation across prefectures between ln R and guards' ln W, and between ln R and
     building cleaners' ln W, in each year.
 X5  Other protective service workers (MHLW occupation 1459, the occupation in which MHLW's definitions place
@@ -147,8 +147,8 @@ def main():
     dlr = np.log(b["R"]) - np.log(a["R"])
     for occ, col, wcol in (("guards", "g_W", "w_guard"), ("cleaners", "c_W", "w_cleaner")):
         dlw = np.log(b[col]) - np.log(a[col])
-        r = sm.WLS(dlw.values, sm.add_constant(dlr.values), weights=a[wcol].values).fit(cov_type="HC1")
-        q = stats.norm.ppf(0.975)
+        r = sm.WLS(dlw.values, sm.add_constant(dlr.values), weights=a[wcol].values).fit(cov_type="HC1", use_t=True)
+        q = stats.t.ppf(0.975, r.df_resid)   # t(45), like every other interval in the paper
         rows.append(dict(check="X3", model=f"long difference, {occ}", term="dlnR", null=0.0, coef=r.params[1], se=r.bse[1],
                          ci_low=r.params[1] - q * r.bse[1], ci_high=r.params[1] + q * r.bse[1], p_two=r.pvalues[1],
                          n_obs=len(dlw), sd_dlnR=float(np.std(dlr, ddof=1)), sd_dlnW=float(np.std(dlw, ddof=1))))
@@ -234,7 +234,7 @@ def main():
         L.append(f"| {r.model} | {r.term} | {r.null:g} | {r.coef:.4f} | {r.se:.4f} | {r.ci_low:.3f} to {r.ci_high:.3f} | {r.p_two:.4f} | "
                  f"{'' if pd.isna(r.p_one) else f'{r.p_one:.4f}'} |")
     L += [""] + [f"- National growth of this pay measure, {k}: {v:.1f}%" for k, v in x2_growth.items()]
-    L += ["", "## X3. Long differences, 2012-2025 (one observation per prefecture, HC1)", "",
+    L += ["", "## X3. Long differences, 2012-2025 (one observation per prefecture, HC1, t(45))", "",
           "| Occupation | Slope on Δln R | SE | 95% interval | p | SD of Δln R | SD of Δln W |", "|---|---|---|---|---|---|---|"]
     for r in out[out["check"] == "X3"].itertuples():
         L.append(f"| {r.model} | {r.coef:.3f} | {r.se:.3f} | {r.ci_low:.3f} to {r.ci_high:.3f} | {r.p_two:.4f} | {r.sd_dlnR:.4f} | {r.sd_dlnW:.4f} |")
